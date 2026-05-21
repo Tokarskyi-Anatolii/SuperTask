@@ -35,7 +35,7 @@ public class TaskListsController : ControllerBase
         return Ok(result);
     }
 
-    [HttpPost]
+    [HttpPost("update")]
     public async Task<IActionResult> Update([FromBody] UpdateTaskListRequestDto request)
     {
         var model = _mapper.Map<UpdateTaskListModel>(request);

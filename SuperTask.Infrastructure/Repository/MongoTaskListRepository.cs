@@ -2,6 +2,7 @@ using MongoDB.Driver;
 using SuperTask.Application.Enums;
 using SuperTask.Data.DataModels;
 using SuperTask.Domain.DomainModels;
+using SuperTask.Infrastructure.Helpers.Constants;
 using SuperTask.Infrastructure.Helpers.Mappers;
 using SuperTask.Infrastructure.Helpers.Sorting;
 
@@ -13,7 +14,7 @@ public class MongoTaskListRepository : ITaskListRepository
 
     public MongoTaskListRepository(IMongoDatabase database)
     {
-        _collection = database.GetCollection<TaskListDocument>("task_lists");
+        _collection = database.GetCollection<TaskListDocument>(MongoCollections.TaskLists);
     }
     
     public async Task CreateAsync(TaskList taskList)
@@ -49,8 +50,8 @@ public class MongoTaskListRepository : ITaskListRepository
     
     public async Task<IReadOnlyCollection<TaskList>> GetAccessibleAsync(
         Guid userId, 
-        int skip, 
-        int take,
+        int page, 
+        int pageSize,
         TaskListSortField sortBy,
         Application.Enums.SortDirection direction)
     {
@@ -61,11 +62,13 @@ public class MongoTaskListRepository : ITaskListRepository
         
         var sort = SortBuilder.BuildSort(sortBy, direction);
         
+        var skip = (page - 1) * pageSize;
+        
         var docs = await _collection
             .Find(filter)
             .Sort(sort)
             .Skip(skip)
-            .Limit(take)
+            .Limit(pageSize)
             .ToListAsync();
 
         return docs.Select(TaskListMapper.ToDomain).ToList();

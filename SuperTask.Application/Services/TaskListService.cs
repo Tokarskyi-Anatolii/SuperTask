@@ -41,7 +41,7 @@ public class TaskListService : ITaskListService
         var taskList = await _repository.GetByIdAsync(model.TaskListId);
         
         if (taskList is null)
-            throw new InvalidOperationException("User is not the owner of this TaskList");
+            throw new InvalidOperationException("TaskList not found");
         
         taskList.EnsureOwner(model.CurrentUserId);
         
