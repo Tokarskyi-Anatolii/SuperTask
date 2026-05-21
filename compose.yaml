@@ -11,6 +11,7 @@ services:
     depends_on:
       - mongo
     environment:
+      - ASPNETCORE_ENVIRONMENT=Development
       - MongoDb__ConnectionString=mongodb://mongo:27017
       - MongoDb__Database=SuperTaskDb
       

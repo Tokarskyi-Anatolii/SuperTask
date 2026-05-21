@@ -26,9 +26,23 @@ builder.Services.Configure<MongoSettings>(
 builder.Services.AddSingleton<IMongoClient>(sp =>
 {
     var settings = sp.GetRequiredService<IOptions<MongoSettings>>().Value;
-    return new MongoClient(settings.ConnectionString);
+    var connectionString = !string.IsNullOrEmpty(settings.ConnectionString) 
+        ? settings.ConnectionString 
+        : builder.Configuration["MongoDb__ConnectionString"];
+    return new MongoClient(connectionString);
 });
 
+builder.Services.AddScoped<IMongoDatabase>(sp =>
+{
+    var client = sp.GetRequiredService<IMongoClient>();
+    var settings = sp.GetRequiredService<IOptions<MongoSettings>>().Value;
+    
+    var databaseName = !string.IsNullOrEmpty(settings.Database) 
+        ? settings.Database 
+        : builder.Configuration["MongoDb__Database"] ?? "SuperTaskDb";
+
+    return client.GetDatabase(databaseName);
+});
 
 var app = builder.Build();
 
@@ -38,8 +52,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseMiddleware<UserIdMiddleware>();
 app.UseMiddleware<ExceptionMiddleware>();
+app.UseMiddleware<UserIdMiddleware>();
 
 app.UseHttpsRedirection();
 app.UseAuthorization();
