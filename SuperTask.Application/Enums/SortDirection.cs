@@ -1,6 +1,7 @@
 namespace SuperTask.Application.Enums;
 
-public class SortDirection
+public enum SortDirection
 {
-    
+    Asc,
+    Desc
 }

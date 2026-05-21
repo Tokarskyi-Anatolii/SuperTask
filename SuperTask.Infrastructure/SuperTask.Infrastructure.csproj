@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="MongoDB.Bson" Version="3.8.1" />
+      <PackageReference Include="MongoDB.Driver" Version="3.8.1" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\SuperTask.Application\SuperTask.Application.csproj" />
+      <ProjectReference Include="..\SuperTask.Data\SuperTask.Data.csproj" />
+      <ProjectReference Include="..\SuperTask.Domain\SuperTask.Domain.csproj" />
+    </ItemGroup>
+
+</Project>

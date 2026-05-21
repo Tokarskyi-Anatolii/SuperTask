@@ -1,6 +1,8 @@
 namespace SuperTask.Application.ServiceModels;
 
-public class CreateTaskListModel
+public sealed class CreateTaskListModel
 {
-    
+    public required string Name { get; set; }
+
+    public required Guid CurrentUserId { get; set; }
 }

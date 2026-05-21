@@ -1,0 +1,17 @@
+﻿services:
+  supertask.api:
+    image: supertask.api
+    build:
+      context: .
+      dockerfile: SuperTask.Api/Dockerfile
+      
+  mongo:
+    image: mongo:7
+    container_name: mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+      
+volumes:
+  mongo_data:
