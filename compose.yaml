@@ -1,9 +1,18 @@
-﻿services:
+﻿version: "3.9"
+
+services:
   supertask.api:
     image: supertask.api
     build:
       context: .
       dockerfile: SuperTask.Api/Dockerfile
+    ports:
+      - "5000:8080"
+    depends_on:
+      - mongo
+    environment:
+      - MongoDb__ConnectionString=mongodb://mongo:27017
+      - MongoDb__Database=SuperTaskDb
       
   mongo:
     image: mongo:7
