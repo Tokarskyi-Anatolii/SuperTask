@@ -25,6 +25,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\SuperTask.Application\SuperTask.Application.csproj" />
+      <ProjectReference Include="..\SuperTask.Infrastructure\SuperTask.Infrastructure.csproj" />
     </ItemGroup>
 
 </Project>

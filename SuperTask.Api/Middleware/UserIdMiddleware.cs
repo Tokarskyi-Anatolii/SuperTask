@@ -13,6 +13,14 @@ public class UserIdMiddleware
 
     public async Task InvokeAsync(HttpContext context)
     {
+        var path = context.Request.Path.Value;
+        
+        if (path.StartsWith("/swagger", StringComparison.OrdinalIgnoreCase))
+        {
+            await _next(context);
+            return;
+        }
+        
         var raw = context.Request.Headers["X-User-Id"].FirstOrDefault();
         
         if (!Guid.TryParse(raw, out var userId))
@@ -23,8 +31,7 @@ public class UserIdMiddleware
             await context.Response.WriteAsync(body);
             return;
         }
-
-        context.Items["UserId"] = userId;
+        
         await _next(context);
     }
 }

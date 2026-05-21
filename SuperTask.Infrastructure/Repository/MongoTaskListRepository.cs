@@ -7,7 +7,7 @@ using SuperTask.Infrastructure.Helpers.Sorting;
 
 namespace SuperTask.Infrastructure.RepoInterfaces;
 
-public class MongoTaskListRepository
+public class MongoTaskListRepository : ITaskListRepository
 {
     private readonly IMongoCollection<TaskListDocument> _collection;
 

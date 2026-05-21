@@ -18,6 +18,7 @@ builder.Services
     .AddValidatorsFromAssemblyContaining<CreateTaskListRequestDtoValidator>();
 
 builder.Services.AddScoped<ICurrentUserAccessor, CurrentUserAccessor>();
+builder.Services.AddScoped<ITaskListRepository, MongoTaskListRepository>();
 
 builder.Services.Configure<MongoSettings>(
     builder.Configuration.GetSection("MongoDb"));
